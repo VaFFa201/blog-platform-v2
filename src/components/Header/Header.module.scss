@@ -1,0 +1,30 @@
+.header {
+  padding: 0px 22px;
+  height: 80px;
+  &__logo {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+  }
+  &__profile {
+    align-items: center;
+  }
+}
+
+.profile {
+  &__name {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: right;
+  }
+  &__pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #1890ff;
+    margin-left: 10px;
+  }
+}
