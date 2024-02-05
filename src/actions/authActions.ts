@@ -81,7 +81,16 @@ export const getCurrentUser = () => {
   }
 }
 
-export const register = (userData: User) => {
+export const checkUserToken = () => {
+  return async (dispatch: AppDispatch) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      dispatch(getCurrentUser())
+    }
+  }
+}
+
+export const register = (userData: UserToLog) => {
   return async (dispatch: AppDispatch) => {
     dispatch(authRequest())
     try {
@@ -91,6 +100,7 @@ export const register = (userData: User) => {
       localStorage.setItem('token', body.user.token)
 
       dispatch(registerSuccess(body))
+      dispatch(getCurrentUser())
 
       return body
     } catch (error: any) {

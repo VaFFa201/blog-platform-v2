@@ -20,7 +20,6 @@ type FormValues = {
 
 const SignForm = () => {
   const dispatch = useAppDispatch()
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -57,7 +56,13 @@ const SignForm = () => {
           render={({ field }) => (
             <label htmlFor="email">
               Email address
-              <Input {...field} className={styles.signForm__input} type="email" id="email" />
+              <Input
+                {...field}
+                className={styles.signForm__input}
+                type="email"
+                id="email"
+                status={errors.email ? 'error' : ''}
+              />
             </label>
           )}
         />
@@ -75,7 +80,13 @@ const SignForm = () => {
           render={({ field }) => (
             <label htmlFor="password">
               Password
-              <Input {...field} className={styles.signForm__input} type="password" id="password" />
+              <Input
+                {...field}
+                className={styles.signForm__input}
+                type="password"
+                id="password"
+                status={errors.password ? 'error' : ''}
+              />
             </label>
           )}
         />

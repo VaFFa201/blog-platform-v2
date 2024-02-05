@@ -3,14 +3,20 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { HERO_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from '../../utils/consts.ts'
-import { useAppSelector } from '../../hooks/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { RootState } from '../../stores/store.ts'
+import { logoutFunc } from '../../actions/authActions.ts'
 
 import styles from './Header.module.scss'
 
 const Header: React.FC = () => {
   const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated)
+  const dispatch = useAppDispatch()
   const user = useAppSelector((state: RootState) => state.auth.user)
+
+  const handleLogOut = () => {
+    dispatch(logoutFunc())
+  }
 
   return (
     <Flex className={styles.header} justify="space-between" align="center">
@@ -19,8 +25,12 @@ const Header: React.FC = () => {
       </Button>
       {isAuthenticated ? (
         <Flex className={styles.header__profile}>
+          <Button>
+            <NavLink to={LOGIN_ROUTE}>Add post</NavLink>
+          </Button>
           <div className={styles.profile__name}>{user.user.username}</div>
           <img src={user.user.image} className={styles.profile__pic} alt="profile icon" />
+          <Button onClick={handleLogOut}>Log Out</Button>
         </Flex>
       ) : (
         <Space className="header__nav">

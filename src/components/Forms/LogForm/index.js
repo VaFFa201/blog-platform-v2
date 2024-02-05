@@ -1,3 +1,3 @@
-import LogForm from './LogForm'
+import LogForm from './LogForm.tsx'
 
 export default LogForm
