@@ -36,9 +36,8 @@ const PostForm = () => {
 
   const addTag = () => {
     const tagTitle = inputValue.trim()
-    // if (tagTitle) {
-    // }
-    const newTag: Tag = { id: Date.now(), title: inputValue }
+
+    const newTag: Tag = { id: Date.now(), title: tagTitle }
     setTags([...tags, newTag])
   }
 

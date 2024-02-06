@@ -12,6 +12,8 @@ import {
   PROFILE_ROUTE,
   NEW_ARTICLE_ROUTE,
 } from './utils/consts.ts'
+import PostForm from './components/Forms/PostForm/PostForm.tsx'
+import LogForm from './components/Forms/LogForm/LogForm.tsx'
 
 interface Route {
   path: string
@@ -23,17 +25,17 @@ export const authRoutes: Route[] = [
     path: PROFILE_ROUTE,
     Component: PostList,
   },
-  {
-    path: `${ARTICLES_ROUTE}/:sign`,
-    Component: PostView,
-  },
+  // {
+  //   path: `${ARTICLES_ROUTE}/:sign`,
+  //   Component: PostView,
+  // },
   {
     path: `${ARTICLES_ROUTE}/:sign/edit`,
     Component: PostList,
   },
   {
-    path: NEW_ARTICLE_ROUTE,
-    Component: PostList,
+    path: '/new-article',
+    Component: PostForm,
   },
 ]
 
