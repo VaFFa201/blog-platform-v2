@@ -6,7 +6,8 @@ import AppRouter from './components/AppRouter/index.ts'
 import { fetchData } from './actions/fetchDataActions.ts'
 import { useAppDispatch } from './hooks/hooks.ts'
 import { checkUserToken } from './actions/authActions.ts'
-import PostForm from './components/Forms/PostForm/PostForm.tsx'
+
+import './App.module.scss'
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -18,7 +19,6 @@ const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        {/* <PostForm /> */}
         <Header />
         <AppRouter />
       </BrowserRouter>

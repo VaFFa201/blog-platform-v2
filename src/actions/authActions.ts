@@ -72,7 +72,7 @@ export const getCurrentUser = () => {
       const response = await $authHost.get('/user')
       const body = response.data
 
-      dispatch(getCurrentUserSuccess(body))
+      dispatch(getCurrentUserSuccess(body.user))
 
       return body
     } catch (error: any) {
@@ -120,8 +120,6 @@ export const login = (userData: UserToLog) => {
 
       dispatch(getCurrentUser())
 
-      // dispatch(loginSuccess(body))
-
       return body
     } catch (error: any) {
       dispatch(loginFailure(error))
@@ -143,4 +141,21 @@ export const logoutFunc = () => {
   }
 }
 
-// заменить на свои криейторы + проработать доконца выявление ошибок
+// исправить интерфейс входа
+export const updateUser = (userData: UserToLog) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(authRequest())
+    try {
+      const response = await $host.put('/user', userData)
+      const body = response.data
+
+      localStorage.setItem('token', body.user.token)
+
+      dispatch(getCurrentUser())
+
+      return body
+    } catch (error: any) {
+      dispatch(loginFailure(error))
+    }
+  }
+}

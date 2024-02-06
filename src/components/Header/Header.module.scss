@@ -13,6 +13,8 @@
 }
 
 .profile {
+  margin: 0px 15px 0px 15px;
+
   &__name {
     font-size: 18px;
     font-style: normal;
@@ -27,4 +29,18 @@
     background-color: #1890ff;
     margin-left: 10px;
   }
+
+  &__new-post {
+    margin-right: 15px;
+  }
+
+  &__logout {
+    margin-left: 15px;
+  }
+}
+
+.green-btn {
+  background-color: green;
+  border-color: green;
+  color: green;
 }

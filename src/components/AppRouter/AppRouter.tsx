@@ -10,8 +10,6 @@ import styles from './AppRouter.module.scss'
 const AppRouter: React.FC = () => {
   const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated)
 
-  console.log(isAuthenticated)
-
   return (
     <main className={styles.main}>
       <Routes>

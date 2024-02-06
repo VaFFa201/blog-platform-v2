@@ -13,7 +13,7 @@ import {
   NEW_ARTICLE_ROUTE,
 } from './utils/consts.ts'
 import PostForm from './components/Forms/PostForm/PostForm.tsx'
-import LogForm from './components/Forms/LogForm/LogForm.tsx'
+import EditProfileForm from './components/Forms/EditProfileForm/EditProfileForm.tsx'
 
 interface Route {
   path: string
@@ -23,18 +23,14 @@ interface Route {
 export const authRoutes: Route[] = [
   {
     path: PROFILE_ROUTE,
-    Component: PostList,
+    Component: EditProfileForm,
   },
-  // {
-  //   path: `${ARTICLES_ROUTE}/:sign`,
-  //   Component: PostView,
-  // },
   {
     path: `${ARTICLES_ROUTE}/:sign/edit`,
     Component: PostList,
   },
   {
-    path: '/new-article',
+    path: NEW_ARTICLE_ROUTE,
     Component: PostForm,
   },
 ]

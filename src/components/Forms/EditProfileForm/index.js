@@ -1,3 +1,3 @@
-import EditProfileForm from './EditProfileForm'
+import EditProfileForm from './EditProfileForm.tsx'
 
 export default EditProfileForm
