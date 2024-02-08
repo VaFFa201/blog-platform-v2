@@ -41,6 +41,29 @@ const PostCard: React.FC<Props> = ({ item }) => {
     return `${month} ${day}, ${year}`
   }
 
+  function shortenText(text: string, maxLength: number) {
+    if (text.length <= maxLength) {
+      return text
+    }
+
+    if (text.indexOf(' ') === -1) {
+      return `${text.slice(0, maxLength)}...`
+    }
+
+    const words = text.split(' ')
+    let shortened = ''
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i]
+      if (shortened.length + word.length + 1 <= maxLength) {
+        shortened += `${word} `
+      } else {
+        shortened = `${shortened.trim()}...`
+        break
+      }
+    }
+    return shortened
+  }
+
   const tags = tagList.map((tag, index) => {
     const tadKey = `${slug}-${tag}${index}`
     return (
@@ -49,6 +72,8 @@ const PostCard: React.FC<Props> = ({ item }) => {
       </Text>
     )
   })
+  const formatedDate = formatDate(createdAt)
+  const shortedTitle = shortenText(title, 60)
 
   return (
     <Flex className={styles.post} vertical>
@@ -56,7 +81,7 @@ const PostCard: React.FC<Props> = ({ item }) => {
         <div className={styles.post__general}>
           <Space>
             <div className={styles.post__title}>
-              <NavLink to={`${ARTICLES_ROUTE}/${slug}`}>{title}</NavLink>
+              <NavLink to={`${ARTICLES_ROUTE}/${slug}`}>{shortedTitle}</NavLink>
             </div>
             <div className={styles.post__likes}>{`${favoritesCount} likes`}</div>
           </Space>
@@ -65,7 +90,7 @@ const PostCard: React.FC<Props> = ({ item }) => {
         <Flex className={styles.post__author}>
           <Flex vertical>
             <div className={styles.author__name}>{username}</div>
-            <div className={styles.post__date}>{formatDate(createdAt)}</div>
+            <div className={styles.post__date}>{formatedDate}</div>
           </Flex>
           <img src={image} className={styles.author__pic} alt="profile icon" />
         </Flex>

@@ -50,7 +50,7 @@ const EditProfileForm = () => {
   return (
     <form className={styles.logForm} onSubmit={handleSubmit(onSubmit)}>
       <Flex vertical>
-        <div className={styles.logForm__header}>Create new account</div>
+        <div className={styles.logForm__header}>Edit profile</div>
         <label htmlFor="username">
           Username
           <Controller

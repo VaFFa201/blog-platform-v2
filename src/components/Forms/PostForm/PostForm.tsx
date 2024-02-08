@@ -95,6 +95,7 @@ const PostForm = () => {
             rules={{
               required: 'Title is required',
               minLength: { value: 3, message: 'Title must be at least 3 characters long' },
+              maxLength: { value: 60, message: 'Title is too long, try to shorten it' },
             }}
             render={({ field }) => (
               <Input
@@ -185,7 +186,6 @@ const PostForm = () => {
             onChange={handleInput}
             className={styles['postForm__tag-input']}
           />
-          {/* <Button className={styles['postForm__tag-btn']} >Удалить </Button> */}
           <Button className={styles['postForm__tag-addbtn']} onClick={addTag}>
             Add Tag
           </Button>

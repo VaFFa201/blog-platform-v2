@@ -1,9 +1,11 @@
+export const AUTH_REQUEST = 'AUTH_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const LOGOUT = 'LOGOUT'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
+export const GET_USER_FAILURE = 'GET_USER_FAILURE'
 
 export interface Error {
   message: string
@@ -27,10 +29,14 @@ export interface UserToLog {
 }
 
 export interface AuthState {
+  isLoading: boolean
   isAuthenticated: boolean
   user: null | User // здесь нужно указать тип данных для объекта user
   error: null | string
-  isRegistered: boolean
+}
+
+interface AuthRequest {
+  type: typeof AUTH_REQUEST
 }
 
 interface AuthLoginSuccess {
@@ -49,6 +55,7 @@ interface AuthLogout {
 
 interface AuthRegisterSuccess {
   type: typeof REGISTER_SUCCESS
+  payload: User
 }
 
 interface AuthRegisterError {
@@ -61,10 +68,17 @@ interface AuthGetUserSuccess {
   payload: User
 }
 
+interface AuthGetUserError {
+  type: typeof GET_USER_FAILURE
+  payload: string
+}
+
 export type AuthAction =
+  | AuthRequest
   | AuthLoginSuccess
   | AuthLoginFailure
   | AuthLogout
   | AuthRegisterSuccess
   | AuthRegisterError
   | AuthGetUserSuccess
+  | AuthGetUserError

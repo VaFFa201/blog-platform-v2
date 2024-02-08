@@ -26,7 +26,7 @@ const Header: React.FC = () => {
       {isAuthenticated ? (
         <Flex className={styles.header__profile}>
           <Button className={`${styles['profile__new-post']} ${styles['green-btn']}`}>
-            <NavLink to={NEW_ARTICLE_ROUTE}>Add post</NavLink>
+            <NavLink to={NEW_ARTICLE_ROUTE}>Create article</NavLink>
           </Button>
           <div className={styles.profile__name}>
             <NavLink to={PROFILE_ROUTE}>{user.username}</NavLink>

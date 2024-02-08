@@ -2,15 +2,13 @@ import { $authHost, $host } from '../http/index.ts'
 import { AppDispatch } from '../stores/store.ts'
 import { User, UserToLog } from '../types/auth.ts'
 
-//
-
 export const authRequest = () => {
   return {
     type: 'AUTH_REQUEST',
   }
 }
 
-export const loginSuccess = (user: UserToLog) => {
+export const loginSuccess = (user: User) => {
   return {
     type: 'LOGIN_SUCCESS',
     payload: user,
@@ -20,19 +18,6 @@ export const loginSuccess = (user: UserToLog) => {
 export const loginFailure = (error: Error) => {
   return {
     type: 'LOGIN_FAILURE',
-    payload: error,
-  }
-}
-
-export const logout = () => {
-  return {
-    type: 'LOGOUT',
-  }
-}
-
-export const logoutFailure = (error: Error) => {
-  return {
-    type: 'LOGOUT_FAILURE',
     payload: error,
   }
 }
@@ -61,6 +46,19 @@ export const getCurrentUserSuccess = (user: User) => {
 export const getCurrentUserError = (error: Error) => {
   return {
     type: 'GET_USER_FAILURE',
+    payload: error,
+  }
+}
+
+export const logout = () => {
+  return {
+    type: 'LOGOUT',
+  }
+}
+
+export const logoutFailure = (error: Error) => {
+  return {
+    type: 'LOGOUT_FAILURE',
     payload: error,
   }
 }
@@ -99,8 +97,8 @@ export const register = (userData: UserToLog) => {
 
       localStorage.setItem('token', body.user.token)
 
-      dispatch(registerSuccess(body))
-      dispatch(getCurrentUser())
+      dispatch(registerSuccess(body.user))
+      // dispatch(getCurrentUser())
 
       return body
     } catch (error: any) {
@@ -118,7 +116,8 @@ export const login = (userData: UserToLog) => {
 
       localStorage.setItem('token', body.user.token)
 
-      dispatch(getCurrentUser())
+      dispatch(loginSuccess(body.user))
+      // dispatch(getCurrentUser())
 
       return body
     } catch (error: any) {
@@ -141,8 +140,7 @@ export const logoutFunc = () => {
   }
 }
 
-// исправить интерфейс входа
-export const updateUser = (userData: UserToLog) => {
+export const updateUser = (userData: User) => {
   return async (dispatch: AppDispatch) => {
     dispatch(authRequest())
     try {

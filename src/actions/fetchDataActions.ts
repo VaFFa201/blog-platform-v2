@@ -1,44 +1,44 @@
 /* eslint-disable import/extensions */
 import { API_URL_BASE } from '../utils/consts.ts'
 import { $host } from '../http/index.ts'
-import { Article, Error, PostsAction, Articles } from '../types/posts.ts'
+import { Article, Error, Articles } from '../types/posts.ts'
 import { AppDispatch } from '../stores/store.ts'
 
-export const fetchDataRequest = (): PostsAction => {
+export const fetchDataRequest = () => {
   return {
     type: 'FETCH_DATA_REQUEST',
   }
 }
 
-export const fetchDataSuccess = (data: Articles): PostsAction => {
+export const fetchDataSuccess = (data: Articles) => {
   return {
     type: 'FETCH_DATA_SUCCESS',
     payload: data,
   }
 }
 
-export const fetchArticleDataSuccess = (data: Article): PostsAction => {
+export const fetchArticleDataSuccess = (data: Article) => {
   return {
     type: 'FETCH_ARTICLE_DATA_SUCCESS',
     payload: data,
   }
 }
 
-export const fetchDataFailure = (error: Error): PostsAction => {
+export const fetchDataFailure = (error: Error) => {
   return {
     type: 'FETCH_DATA_FAILURE',
     payload: error,
   }
 }
 
-export const handlePageChange = (pageNum: number): PostsAction => {
+export const handlePageChange = (pageNum: number) => {
   return {
     type: 'HANDLE_PAGE_CHANGE',
     payload: pageNum,
   }
 }
 
-export const clearCurrentArticle = (): PostsAction => {
+export const clearCurrentArticle = () => {
   return {
     type: 'CLEAR_CURRENT_ARTICLE',
   }
