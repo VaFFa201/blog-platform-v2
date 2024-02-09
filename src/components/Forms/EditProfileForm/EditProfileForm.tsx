@@ -3,16 +3,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Button, Checkbox, Flex, Input } from 'antd'
-import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Button, Flex, Input, notification } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
-
-import { LOGIN_ROUTE } from '../../../utils/consts.ts'
 
 import styles from './LogForm.module.scss'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks.ts'
 import { RootState } from '../../../stores/store.ts'
+import { updateUser } from '../../../actions/authActions.ts'
 
 interface FormValues {
   username: string
@@ -23,28 +20,37 @@ interface FormValues {
 
 const EditProfileForm = () => {
   const {
-    getValues,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormValues>()
 
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const user = useAppSelector((state: RootState) => state.auth.user)
 
+  const handleUpdateProfile = () => {
+    notification.success({
+      message: 'Successful update',
+      description: 'The user profile has been successfully updated',
+      placement: 'top',
+      duration: 2,
+    })
+  }
+
   const onSubmit = async (data: FormValues) => {
-    const user = {
+    const userToUpdate = {
       user: {
         username: data.username,
         email: data.email,
         password: data.newPassword,
+        bio: user.bio,
         image: data.image,
       },
     }
-    console.log(user)
 
-    // if (data2) navigate('/articles')
+    const data2 = await dispatch(updateUser(userToUpdate))
+
+    if (data2) handleUpdateProfile()
   }
 
   return (
@@ -56,6 +62,7 @@ const EditProfileForm = () => {
           <Controller
             name="username"
             control={control}
+            defaultValue={user.username}
             rules={{
               required: 'Username is required',
               minLength: { value: 3, message: 'Username must be at least 3 characters long' },
@@ -66,7 +73,6 @@ const EditProfileForm = () => {
                 {...field}
                 className={styles.logForm__input}
                 id="username"
-                defaultValue={user.username}
                 status={errors.username ? 'error' : ''}
               />
             )}
@@ -78,6 +84,7 @@ const EditProfileForm = () => {
           <Controller
             name="email"
             control={control}
+            defaultValue={user.email}
             rules={{
               required: 'Email is required',
               pattern: {
@@ -91,7 +98,6 @@ const EditProfileForm = () => {
                 className={styles.logForm__input}
                 type="email"
                 id="email"
-                defaultValue={user.email}
                 status={errors.email ? 'error' : ''}
               />
             )}
@@ -126,6 +132,7 @@ const EditProfileForm = () => {
           <Controller
             name="image"
             control={control}
+            defaultValue={user.image}
             rules={{
               required: 'URL is required',
               pattern: {
@@ -148,39 +155,3 @@ const EditProfileForm = () => {
 }
 
 export default EditProfileForm
-
-// import { Button, Flex, Input } from 'antd'
-// import React from 'react'
-
-// import styles from './LogForm.module.scss'
-
-// const EditProfileForm = () => {
-//   return (
-//     <form className={styles.logForm}>
-//       <Flex vertical>
-//         <div className={styles.logForm__header}>Edit Profile</div>
-//         <label htmlFor="username">
-//           Username
-//           <Input className={styles.logForm__input} type="text" id="username" />
-//         </label>
-//         <label htmlFor="email">
-//           Email address
-//           <Input className={styles.logForm__input} type="email" id="email" />
-//         </label>
-//         <label htmlFor="password">
-//           New password
-//           <Input className={styles.logForm__input} type="password" id="password" />
-//         </label>
-//         <label htmlFor="password-rep">
-//           Avatar image (url)
-//           <Input className={styles.logForm__input} type="password" id="password-rep" />
-//         </label>
-//         <Button className={styles.logForm__btn} type="primary" size="large">
-//           Save
-//         </Button>
-//       </Flex>
-//     </form>
-//   )
-// }
-
-// export default EditProfileForm

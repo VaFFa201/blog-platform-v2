@@ -48,11 +48,25 @@ const authReducer = (state: AuthState = initialState, action: AuthAction): AuthS
       return {
         ...state,
         isLoading: false,
-        // isAuthenticated: true,
+        isAuthenticated: true,
         user: action.payload,
         error: null,
       }
     case 'GET_USER_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      }
+    case 'UPDATE_USER_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true,
+        user: action.payload,
+        error: null,
+      }
+    case 'UPDATE_USER_FAILURE':
       return {
         ...state,
         isLoading: false,

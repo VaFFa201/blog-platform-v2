@@ -1,6 +1,6 @@
 import { $authHost, $host } from '../http/index.ts'
 import { AppDispatch } from '../stores/store.ts'
-import { User, UserToLog } from '../types/auth.ts'
+import { User, UserToLog, UserToUpdate } from '../types/auth.ts'
 
 export const authRequest = () => {
   return {
@@ -46,6 +46,20 @@ export const getCurrentUserSuccess = (user: User) => {
 export const getCurrentUserError = (error: Error) => {
   return {
     type: 'GET_USER_FAILURE',
+    payload: error,
+  }
+}
+
+export const updateUserSuccess = (user: User) => {
+  return {
+    type: 'UPDATE_USER_SUCCESS',
+    payload: user,
+  }
+}
+
+export const updatetUserFailure = (error: Error) => {
+  return {
+    type: 'UPDATE_USER_FAILURE',
     payload: error,
   }
 }
@@ -98,7 +112,6 @@ export const register = (userData: UserToLog) => {
       localStorage.setItem('token', body.user.token)
 
       dispatch(registerSuccess(body.user))
-      // dispatch(getCurrentUser())
 
       return body
     } catch (error: any) {
@@ -117,7 +130,6 @@ export const login = (userData: UserToLog) => {
       localStorage.setItem('token', body.user.token)
 
       dispatch(loginSuccess(body.user))
-      // dispatch(getCurrentUser())
 
       return body
     } catch (error: any) {
@@ -140,20 +152,20 @@ export const logoutFunc = () => {
   }
 }
 
-export const updateUser = (userData: User) => {
+export const updateUser = (newUserData: UserToUpdate) => {
   return async (dispatch: AppDispatch) => {
     dispatch(authRequest())
     try {
-      const response = await $host.put('/user', userData)
+      const response = await $authHost.put('/user', newUserData)
       const body = response.data
 
       localStorage.setItem('token', body.user.token)
 
-      dispatch(getCurrentUser())
+      dispatch(updateUserSuccess(body.user))
 
       return body
     } catch (error: any) {
-      dispatch(loginFailure(error))
+      dispatch(updatetUserFailure(error))
     }
   }
 }

@@ -6,6 +6,8 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
 export const GET_USER_FAILURE = 'GET_USER_FAILURE'
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE'
 
 export interface Error {
   message: string
@@ -19,6 +21,15 @@ export interface User {
   username: string
   bio: string
   image: string
+}
+export interface UserToUpdate {
+  user: {
+    email: string
+    password: string
+    username: string
+    bio: string
+    image: string
+  }
 }
 
 export interface UserToLog {
@@ -72,6 +83,15 @@ interface AuthGetUserError {
   type: typeof GET_USER_FAILURE
   payload: string
 }
+interface UpdateUserSuccess {
+  type: typeof UPDATE_USER_SUCCESS
+  payload: User
+}
+
+interface UpdateUserError {
+  type: typeof UPDATE_USER_FAILURE
+  payload: string
+}
 
 export type AuthAction =
   | AuthRequest
@@ -82,3 +102,5 @@ export type AuthAction =
   | AuthRegisterError
   | AuthGetUserSuccess
   | AuthGetUserError
+  | UpdateUserSuccess
+  | UpdateUserError

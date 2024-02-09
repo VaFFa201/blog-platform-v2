@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Button, Flex, Input } from 'antd'
+import { Button, Flex, Input, notification } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
 
 import styles from './PostForm.module.scss'
@@ -39,6 +39,7 @@ const PostForm = () => {
 
     const newTag: Tag = { id: Date.now(), title: tagTitle }
     setTags([...tags, newTag])
+    setInputValue('')
   }
 
   const removeTag = (id: number) => {
@@ -55,13 +56,35 @@ const PostForm = () => {
 
     return (
       <Flex key={key}>
-        <Input value={title} className={styles.postForm__tag} />
+        <Input value={title} className={styles.postForm__tag} disabled />
         <Button onClick={() => removeTag(id)} className={styles['postForm__tag-btn']} danger>
           Delete
         </Button>
       </Flex>
     )
   })
+
+  const handleUpdateProfile = () => {
+    notification.success({
+      message: 'Successful update',
+      description: 'The user profile has been successfully updated',
+      placement: 'top',
+      duration: 2,
+    })
+  }
+
+  function isValuePresentInArray(tagsToCheck: Tag[], searchTerm: string): boolean {
+    let isValuePresent = false
+
+    for (let i = 0; i < tagsToCheck.length; i++) {
+      if (tagsToCheck[i].title === searchTerm) {
+        isValuePresent = true
+        break
+      }
+    }
+
+    return isValuePresent
+  }
 
   // const dispatch = useAppDispatch()
 
@@ -156,14 +179,16 @@ const PostForm = () => {
           />
         </label>
         {errors.mainСontent && <span>{errors.mainСontent.message}</span>}
-        <label htmlFor="tag">
+        {/* <label htmlFor="tag">
           Tags
           <Controller
             name="tag"
             control={control}
-            // rules={{
-            //   required: 'Repeat Password is required',
-            // }}
+            rules={{
+              minLength: { value: 1, message: 'Tag must be at least 1 characters long' },
+              maxLength: { value: 35, message: 'Tag must no more than 35 characters long' },
+              validate: (value) => !isValuePresentInArray(tags, value) || 'The tag must be unique in the selection',
+            }}
             render={({ field }) => (
               <Input
                 {...field}
@@ -174,18 +199,34 @@ const PostForm = () => {
               />
             )}
           />
-        </label>
-        {errors.tag && <span>{errors.tag.message}</span>}
+        </label> */}
 
         {tagsToRender}
 
         <Flex>
-          <Input
-            placeholder="Tag"
-            value={inputValue}
-            onChange={handleInput}
-            className={styles['postForm__tag-input']}
+          <Controller
+            name="tag"
+            control={control}
+            rules={{
+              minLength: { value: 1, message: 'Tag must be at least 1 characters long' },
+              maxLength: { value: 35, message: 'Tag must no more than 35 characters long' },
+              validate: (value) => !isValuePresentInArray(tags, value) || 'The tag must be unique in the selection',
+            }}
+            render={({ field }) => (
+              <Input
+                {...field}
+                className={styles['postForm__tag-input']}
+                // className={styles.postForm__input}
+                value={inputValue}
+                onChange={handleInput}
+                // type="tag"
+                id="tag"
+                status={errors.tag ? 'error' : ''}
+              />
+            )}
           />
+
+          {errors.tag && <span>{errors.tag.message}</span>}
           <Button className={styles['postForm__tag-addbtn']} onClick={addTag}>
             Add Tag
           </Button>

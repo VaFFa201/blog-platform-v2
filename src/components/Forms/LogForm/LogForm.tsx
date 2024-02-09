@@ -4,7 +4,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Checkbox, Flex, Input } from 'antd'
-import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 
