@@ -31,7 +31,9 @@ const Header: React.FC = () => {
           <div className={styles.profile__name}>
             <NavLink to={PROFILE_ROUTE}>{user.username}</NavLink>
           </div>
-          <img src={user.image} className={styles.profile__pic} alt="profile icon" />
+          <NavLink to={PROFILE_ROUTE}>
+            <img src={user.image} className={styles.profile__pic} alt="profile icon" />
+          </NavLink>
           <Button onClick={handleLogOut} className={styles.profile__logout}>
             Log Out
           </Button>
@@ -51,40 +53,3 @@ const Header: React.FC = () => {
 }
 
 export default Header
-
-// import  Button, Flex, Space  from 'antd'
-// import React,  FC  from 'react'
-// import  NavLink  from 'react-router-dom'
-// import  useSelector  from 'react-redux'
-// import  RootState  from '../../store'
-
-// import  HERO_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE  from '../../utils/consts'
-
-// import styles from './Header.module.scss'
-
-// const Header: FC = () => {
-//   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated)
-
-//   // useEffect(() => , [])  ,  useEffect
-
-//   console.log(isAuthenticated)
-
-//   return (
-//     <Flex className=styles.header justify="space-between" align="center">
-//       <Button className=styles.header__logo type="text">
-//         <NavLink to=HERO_ROUTE>Realworld Blog</NavLink>
-//       </Button>
-//       isAuthenticated ? null : (
-//         <Space className="header__nav">
-//           <Button type="text">
-//             <NavLink to=LOGIN_ROUTE>Sign In</NavLink>
-//           </Button>
-//           <Button danger>
-//             <NavLink to=REGISTRATION_ROUTE>Sign Up</NavLink>
-//           </Button>
-//         </Space>
-//       )
-//     </Flex>
-//   )
-
-// export default Header

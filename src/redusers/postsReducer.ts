@@ -52,6 +52,17 @@ const postsReducer = (state: PostsState = initialState, action: PostsAction): Po
         currentArticle: '',
       }
 
+    case 'POST_ARTICLE_SUCCESS':
+      return {
+        ...state,
+      }
+
+    case 'POST_ARTICLE_FAILURE':
+      return {
+        ...state,
+        error: action.payload.message,
+      }
+
     default:
       return state
   }

@@ -1,9 +1,11 @@
 import React from 'react'
-import { Flex, Space, Typography } from 'antd'
+import { Button, Flex, Space, Typography } from 'antd'
 import { NavLink } from 'react-router-dom'
 
 import { ARTICLES_ROUTE } from '../../utils/consts.ts'
 import { Post } from '../../types/posts.ts'
+import { makePostFavorite } from '../../actions/fetchDataActions.ts'
+import { useAppDispatch } from '../../hooks/hooks.ts'
 
 import styles from './PostCard.module.scss'
 
@@ -16,6 +18,7 @@ interface Props {
 const PostCard: React.FC<Props> = ({ item }) => {
   const { slug, description, title, createdAt, author, favoritesCount, tagList } = item
   const { username, image } = author
+  const dispatch = useAppDispatch()
 
   function formatDate(dateString: string) {
     const months = [
@@ -83,7 +86,10 @@ const PostCard: React.FC<Props> = ({ item }) => {
             <div className={styles.post__title}>
               <NavLink to={`${ARTICLES_ROUTE}/${slug}`}>{shortedTitle}</NavLink>
             </div>
-            <div className={styles.post__likes}>{`${favoritesCount} likes`}</div>
+            <div className={styles.post__likes}>
+              <Button onClick={() => dispatch(makePostFavorite(slug))}>like</Button>
+              {`${favoritesCount} likes`}
+            </div>
           </Space>
           <div className={styles.post__tags}>{tags}</div>
         </div>

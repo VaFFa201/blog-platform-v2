@@ -4,6 +4,9 @@ export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE'
 export const HANDLE_PAGE_CHANGE = 'HANDLE_PAGE_CHANGE'
 export const FETCH_ARTICLE_DATA_SUCCESS = 'FETCH_ARTICLE_DATA_SUCCESS'
 export const CLEAR_CURRENT_ARTICLE = 'CLEAR_CURRENT_ARTICLE'
+export const POST_ARTICLE_SUCCESS = 'POST_ARTICLE_SUCCESS'
+export const POST_ARTICLE_FAILURE = 'POST_ARTICLE_FAILURE'
+export const MAKE_POST_FAVORITE = 'MAKE_POST_FAVORITE'
 
 export interface Post {
   slug: string
@@ -40,6 +43,15 @@ export interface Article {
   article: Post
 }
 
+export interface ArticleToSend {
+  article: {
+    title: string
+    description: string
+    body: string
+    tagList: string[]
+  }
+}
+
 export interface Error {
   message: string
   name: string
@@ -74,6 +86,19 @@ interface PostsClearCurrentArticle {
   type: typeof CLEAR_CURRENT_ARTICLE
 }
 
+interface PostArticleSuccess {
+  type: typeof POST_ARTICLE_SUCCESS
+}
+
+interface PostArticleFailure {
+  type: typeof POST_ARTICLE_FAILURE
+  payload: Error
+}
+
+interface MakePostFavourite {
+  type: typeof MAKE_POST_FAVORITE
+}
+
 export type PostsAction =
   | PostsFetchDataRequest
   | PostsFetchDataSuccess
@@ -81,3 +106,6 @@ export type PostsAction =
   | PostsHandlePageChange
   | PostsFetchArticleDataSuccess
   | PostsClearCurrentArticle
+  | PostArticleSuccess
+  | PostArticleFailure
+  | MakePostFavourite

@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import { Flex, Spin, Typography } from 'antd'
-import { useParams } from 'react-router-dom'
+import { Button, Flex, Spin, Typography } from 'antd'
+import { NavLink, useParams } from 'react-router-dom'
 import Markdown from 'react-markdown'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { clearCurrentArticle, fetchArticleData } from '../../actions/fetchDataActions.ts'
+import { EDIT_ARTICLE_ROUTE } from '../../utils/consts.ts'
 
 import styles from './PostView.module.scss'
 
@@ -85,7 +86,14 @@ const PostView: React.FC = () => {
           <img src={image} className={styles.author__pic} alt="profile icon" />
         </Flex>
       </Flex>
-      <div className={styles.post__description}>{description}</div>
+      <Flex>
+        <div className={styles.post__description}>{description}</div>
+        <Button className={styles['green-btn']}>
+          <NavLink to={EDIT_ARTICLE_ROUTE}>Edit</NavLink>
+        </Button>
+        <Button danger>Delete</Button>
+      </Flex>
+
       <Markdown>{body}</Markdown>
     </Flex>
   )
