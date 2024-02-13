@@ -21,10 +21,11 @@ const PostView = () => {
   const { sign } = useParams<PostViewParams>()
   const currentArticle = useAppSelector((state: RootState) => state.posts.currentArticle)
   const currentUser = useAppSelector((state: RootState) => state.auth.user)
+  const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchArticleData(sign))
+    dispatch(fetchArticleData(sign, isAuthenticated))
     return () => {
       dispatch(clearCurrentArticle())
     }

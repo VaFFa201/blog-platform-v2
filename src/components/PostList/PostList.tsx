@@ -13,6 +13,7 @@ const PostList: React.FC = () => {
 
   const data = useAppSelector((state) => state.posts.pageData)
   const page = useAppSelector((state) => state.posts.pageNumber)
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const articlesCount = useAppSelector((state) => state.posts.totalArticles)
 
   const postCards = data.map((item: Post) => {
@@ -31,7 +32,7 @@ const PostList: React.FC = () => {
         showSizeChanger={false}
         pageSize={20}
         onChange={(pageNum) => {
-          dispatch(fetchDataOnPage(pageNum))
+          dispatch(fetchDataOnPage(pageNum, isAuthenticated))
           window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
       />

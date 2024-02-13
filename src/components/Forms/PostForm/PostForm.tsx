@@ -34,6 +34,7 @@ const PostForm = () => {
   const { sign } = useParams<PostViewParams>()
   const dispatch = useAppDispatch()
   const currentArticle = useAppSelector((state: RootState) => state.posts.currentArticle)
+  const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated)
   const location = useLocation()
 
   const pathIncludesEdit = location.pathname.includes('/edit')
@@ -64,7 +65,7 @@ const PostForm = () => {
 
   useEffect(() => {
     if (pathIncludesEdit) {
-      dispatch(fetchArticleData(sign))
+      dispatch(fetchArticleData(sign, isAuthenticated))
 
       currentArticle?.tagList.forEach((tag: string) => {
         const tagToField = { title: tag }

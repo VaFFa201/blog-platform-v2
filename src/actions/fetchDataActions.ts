@@ -69,10 +69,10 @@ export const updateArticleFailure = (error: Error) => {
   }
 }
 
-export const makePostFavoriteSuccess = (slug: string) => {
+export const makePostFavoriteSuccess = (obj: any) => {
   return {
     type: 'MAKE_POST_FAVORITE_SUCCESS',
-    payload: slug,
+    payload: obj,
   }
 }
 
@@ -105,12 +105,18 @@ export const fetchData = (isAuth: boolean) => {
   }
 }
 
-export const fetchDataOnPage = (pageNum: number) => {
+export const fetchDataOnPage = (pageNum: number, isAuth: boolean) => {
   return async (dispatch: AppDispatch) => {
     dispatch(handlePageChange(pageNum))
     dispatch(fetchDataRequest())
     try {
-      const response = await $host.get(`${API_URL_BASE}/articles?offset=${(pageNum - 1) * 20}`)
+      let response
+
+      if (isAuth) {
+        response = await $authHost.get(`${API_URL_BASE}/articles?offset=${(pageNum - 1) * 20}`)
+      } else {
+        response = await $host.get(`${API_URL_BASE}/articles?offset=${(pageNum - 1) * 20}`)
+      }
       const body = response.data
 
       dispatch(fetchDataSuccess(body))
@@ -122,11 +128,17 @@ export const fetchDataOnPage = (pageNum: number) => {
   }
 }
 
-export const fetchArticleData = (slug: string) => {
+export const fetchArticleData = (slug: string, isAuth: boolean) => {
   return async (dispatch: AppDispatch) => {
     dispatch(fetchDataRequest())
     try {
-      const response = await $host.get(`${API_URL_BASE}/articles/${slug}`)
+      let response
+      if (isAuth) {
+        response = await $authHost.get(`${API_URL_BASE}/articles/${slug}`)
+      } else {
+        response = await $host.get(`${API_URL_BASE}/articles/${slug}`)
+      }
+      // const response = await $host.get(`${API_URL_BASE}/articles/${slug}`)
       const body = response.data
 
       dispatch(fetchArticleDataSuccess(body))
@@ -177,6 +189,24 @@ export const makePostFavorite = (slug: string) => {
     dispatch(fetchDataRequest())
     try {
       const response = await $authHost.post(`${API_URL_BASE}/articles/${slug}/favorite`)
+      const body = response.data
+
+      makePostFavoriteSuccess(body)
+
+      console.log(body)
+
+      return body
+    } catch (error: any) {
+      dispatch(makePostFavoriteFailure(error))
+    }
+  }
+}
+
+export const makePostUnfavorite = (slug: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(fetchDataRequest())
+    try {
+      const response = await $authHost.delete(`${API_URL_BASE}/articles/${slug}/favorite`)
       const body = response.data
 
       console.log(body)
