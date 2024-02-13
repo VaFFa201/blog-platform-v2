@@ -16,7 +16,7 @@ interface Props {
 }
 
 const PostCard: React.FC<Props> = ({ item }) => {
-  const { slug, description, title, createdAt, author, favoritesCount, tagList } = item
+  const { slug, description, title, createdAt, author, favoritesCount, tagList, favorited } = item
   const { username, image } = author
   const dispatch = useAppDispatch()
 
@@ -87,7 +87,9 @@ const PostCard: React.FC<Props> = ({ item }) => {
               <NavLink to={`${ARTICLES_ROUTE}/${slug}`}>{shortedTitle}</NavLink>
             </div>
             <div className={styles.post__likes}>
-              <Button onClick={() => dispatch(makePostFavorite(slug))}>like</Button>
+              <Button danger={favorited} onClick={() => dispatch(makePostFavorite(slug))}>
+                like
+              </Button>
               {`${favoritesCount} likes`}
             </div>
           </Space>

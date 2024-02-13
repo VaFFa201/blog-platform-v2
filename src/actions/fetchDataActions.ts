@@ -56,6 +56,26 @@ export const postArticleFailure = (error: Error) => {
     payload: error,
   }
 }
+export const updateArticleSuccess = () => {
+  return {
+    type: 'UPDATE_ARTICLE_SUCCESS',
+  }
+}
+
+export const updateArticleFailure = (error: Error) => {
+  return {
+    type: 'UPDATE_ARTICLE_FAILURE',
+    payload: error,
+  }
+}
+
+export const makePostFavoriteSuccess = (slug: string) => {
+  return {
+    type: 'MAKE_POST_FAVORITE_SUCCESS',
+    payload: slug,
+  }
+}
+
 export const makePostFavoriteFailure = (error: Error) => {
   return {
     type: 'MAKE_POST_FAVORITE',
@@ -63,11 +83,17 @@ export const makePostFavoriteFailure = (error: Error) => {
   }
 }
 
-export const fetchData = () => {
+export const fetchData = (isAuth: boolean) => {
   return async (dispatch: AppDispatch) => {
     dispatch(fetchDataRequest())
     try {
-      const response = await $host.get(`${API_URL_BASE}/articles`)
+      let response
+      if (isAuth) {
+        response = await $authHost.get(`${API_URL_BASE}/articles`)
+      } else {
+        response = await $host.get(`${API_URL_BASE}/articles`)
+      }
+
       const body = response.data
 
       dispatch(fetchDataSuccess(body))
@@ -129,17 +155,33 @@ export const postNewArticle = (article: ArticleToSend) => {
   }
 }
 
+export const updateArticle = (article: ArticleToSend, slug: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(fetchDataRequest())
+    try {
+      const response = await $authHost.put(`${API_URL_BASE}/articles/${slug}`, article)
+      const body = response.data
+
+      dispatch(updateArticleSuccess())
+      console.log(body)
+
+      return body
+    } catch (error: any) {
+      dispatch(updateArticleFailure(error))
+    }
+  }
+}
+
 export const makePostFavorite = (slug: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(fetchDataRequest())
     try {
       const response = await $authHost.post(`${API_URL_BASE}/articles/${slug}/favorite`)
-      // const body = response.data
+      const body = response.data
 
-      console.log(response)
-      console.log(`${API_URL_BASE}/articles/${slug}/favorite`)
+      console.log(body)
 
-      return response
+      return body
     } catch (error: any) {
       dispatch(makePostFavoriteFailure(error))
     }

@@ -27,7 +27,7 @@ export const authRoutes: Route[] = [
   },
   {
     path: `${ARTICLES_ROUTE}/:sign/edit`,
-    Component: PostList,
+    Component: PostForm,
   },
   {
     path: NEW_ARTICLE_ROUTE,

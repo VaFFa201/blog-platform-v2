@@ -6,7 +6,8 @@ import Markdown from 'react-markdown'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { clearCurrentArticle, fetchArticleData } from '../../actions/fetchDataActions.ts'
-import { EDIT_ARTICLE_ROUTE } from '../../utils/consts.ts'
+import { ARTICLES_ROUTE, EDIT_ARTICLE_ROUTE } from '../../utils/consts.ts'
+import { RootState } from '../../stores/store.ts'
 
 import styles from './PostView.module.scss'
 
@@ -16,14 +17,17 @@ type PostViewParams = {
   sign: any
 }
 
-const PostView: React.FC = () => {
+const PostView = () => {
   const { sign } = useParams<PostViewParams>()
-  const currentArticle = useAppSelector((state) => state.posts.currentArticle)
+  const currentArticle = useAppSelector((state: RootState) => state.posts.currentArticle)
+  const currentUser = useAppSelector((state: RootState) => state.auth.user)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(clearCurrentArticle())
     dispatch(fetchArticleData(sign))
+    return () => {
+      dispatch(clearCurrentArticle())
+    }
   }, [])
 
   function formatDate(dateString: string) {
@@ -67,6 +71,7 @@ const PostView: React.FC = () => {
       </Text>
     )
   })
+  const showAdditionalButtons = currentUser?.username === username
 
   return (
     <Flex className={`${styles.post} ${styles['post-view']}`} vertical>
@@ -88,10 +93,14 @@ const PostView: React.FC = () => {
       </Flex>
       <Flex>
         <div className={styles.post__description}>{description}</div>
-        <Button className={styles['green-btn']}>
-          <NavLink to={EDIT_ARTICLE_ROUTE}>Edit</NavLink>
-        </Button>
-        <Button danger>Delete</Button>
+        {showAdditionalButtons && (
+          <>
+            <Button className={styles['green-btn']}>
+              <NavLink to={`${ARTICLES_ROUTE}/${slug}/edit`}>Edit</NavLink>
+            </Button>
+            <Button danger>Delete</Button>
+          </>
+        )}
       </Flex>
 
       <Markdown>{body}</Markdown>

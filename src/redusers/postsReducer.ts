@@ -8,7 +8,7 @@ const initialState: PostsState = {
   pageNumber: 1,
   totalArticles: 0,
   error: '',
-  currentArticle: '',
+  currentArticle: null,
   isLoading: false,
 }
 
@@ -49,7 +49,7 @@ const postsReducer = (state: PostsState = initialState, action: PostsAction): Po
     case 'CLEAR_CURRENT_ARTICLE':
       return {
         ...state,
-        currentArticle: '',
+        currentArticle: null,
       }
 
     case 'POST_ARTICLE_SUCCESS':
@@ -61,6 +61,21 @@ const postsReducer = (state: PostsState = initialState, action: PostsAction): Po
       return {
         ...state,
         error: action.payload.message,
+      }
+
+    case 'UPDATE_ARTICLE_SUCCESS':
+      return {
+        ...state,
+      }
+
+    case 'UPDATE_ARTICLE_FAILURE':
+      return {
+        ...state,
+        error: action.payload.message,
+      }
+    case 'MAKE_POST_FAVORITE_SUCCESS':
+      return {
+        ...state,
       }
 
     default:

@@ -3,14 +3,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Button, Flex, Input, notification } from 'antd'
+import { Button, Flex, Input, Spin, notification } from 'antd'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
 import styles from './PostForm.module.scss'
 import TextArea from 'antd/es/input/TextArea'
-import { useState } from 'react'
-import { useAppDispatch } from '../../../hooks/hooks.ts'
-import { postNewArticle } from '../../../actions/fetchDataActions.ts'
+import { useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks.ts'
+import {
+  clearCurrentArticle,
+  fetchArticleData,
+  postNewArticle,
+  updateArticle,
+} from '../../../actions/fetchDataActions.ts'
+import { useLocation, useParams } from 'react-router-dom'
+import { RootState } from '../../../stores/store.ts'
 
 interface FormValues {
   title: string
@@ -19,7 +26,18 @@ interface FormValues {
   tags: { title: string }[]
 }
 
+type PostViewParams = {
+  sign: any
+}
+
 const PostForm = () => {
+  const { sign } = useParams<PostViewParams>()
+  const dispatch = useAppDispatch()
+  const currentArticle = useAppSelector((state: RootState) => state.posts.currentArticle)
+  const location = useLocation()
+
+  const pathIncludesEdit = location.pathname.includes('/edit')
+
   const {
     getValues,
     handleSubmit,
@@ -27,15 +45,46 @@ const PostForm = () => {
     setError,
     clearErrors,
     formState: { errors },
-  } = useForm<FormValues>()
+  } = useForm<FormValues>({
+    defaultValues:
+      pathIncludesEdit && currentArticle
+        ? {
+            title: currentArticle.title,
+            description: currentArticle.description,
+            body: currentArticle.body,
+            tags: currentArticle.tagList.forEach((tag: string) => ({ title: tag })),
+          }
+        : { title: '', description: '', body: '', tags: [] },
+  })
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'tags',
   })
 
-  const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (pathIncludesEdit) {
+      dispatch(fetchArticleData(sign))
+
+      currentArticle?.tagList.forEach((tag: string) => {
+        const tagToField = { title: tag }
+        append(tagToField)
+      })
+
+      return () => {
+        dispatch(clearCurrentArticle())
+      }
+    }
+  }, [])
 
   const [inputValue, setInputValue] = useState<string>('')
+
+  if (!currentArticle && pathIncludesEdit)
+    return (
+      <Flex style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <Spin />
+      </Flex>
+    )
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -59,20 +108,6 @@ const PostForm = () => {
     }
   }
 
-  const tagsToRender = fields.map((tag, index) => {
-    const { title } = tag
-    const key = `${title}-${index}`
-
-    return (
-      <Flex key={key}>
-        <Input value={title} className={styles.postForm__tag} disabled />
-        <Button onClick={() => remove(index)} className={styles['postForm__tag-btn']} danger>
-          Delete
-        </Button>
-      </Flex>
-    )
-  })
-
   const handlePostArticle = () => {
     notification.success({
       message: 'Successful posting',
@@ -92,15 +127,35 @@ const PostForm = () => {
       },
     }
 
-    const data2 = await dispatch(postNewArticle(article))
+    if (pathIncludesEdit) {
+      const data2 = await dispatch(updateArticle(article, currentArticle.slug))
 
-    if (data2) handlePostArticle()
+      if (data2) handlePostArticle()
+    } else {
+      const data2 = await dispatch(postNewArticle(article))
+
+      if (data2) handlePostArticle()
+    }
   }
+
+  const tagsToRender = fields?.map((tag, index) => {
+    const { title } = tag
+    const key = `${title}-${index}`
+
+    return (
+      <Flex key={key}>
+        <Input value={title} className={styles.postForm__tag} disabled />
+        <Button onClick={() => remove(index)} className={styles['postForm__tag-btn']} danger>
+          Delete
+        </Button>
+      </Flex>
+    )
+  })
 
   return (
     <form className={styles.postForm} onSubmit={handleSubmit(onSubmit)}>
       <Flex vertical>
-        <div className={styles.postForm__header}>Create new article</div>
+        <div className={styles.postForm__header}> {pathIncludesEdit ? 'Update article' : 'Create new article'}</div>
         <label htmlFor="title">
           Title
           <Controller
@@ -123,6 +178,7 @@ const PostForm = () => {
           />
         </label>
         {errors.title && <span>{errors.title.message}</span>}
+
         <label htmlFor="description">
           Short description
           <Controller
@@ -143,6 +199,7 @@ const PostForm = () => {
           />
         </label>
         {errors.description && <span>{errors.description.message}</span>}
+
         <label htmlFor="body">
           Text
           <Controller
@@ -194,7 +251,7 @@ const PostForm = () => {
         </label>
 
         <Button type="primary" size="large" htmlType="submit" className={styles.postForm__btn}>
-          Send
+          {pathIncludesEdit ? 'Update' : 'Send'}
         </Button>
       </Flex>
     </form>
