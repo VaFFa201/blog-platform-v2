@@ -9,6 +9,7 @@ export const POST_ARTICLE_FAILURE = 'POST_ARTICLE_FAILURE'
 export const UPDATE_ARTICLE_SUCCESS = 'UPDATE_ARTICLE_SUCCESS'
 export const UPDATE_ARTICLE_FAILURE = 'UPDATE_ARTICLE_FAILURE'
 export const MAKE_POST_FAVORITE_SUCCESS = 'MAKE_POST_FAVORITE_SUCCESS'
+export const MAKE_POST_UNFAVORITE_SUCCESS = 'MAKE_POST_UNFAVORITE_SUCCESS'
 
 export interface Post {
   slug: string
@@ -109,6 +110,11 @@ interface UpdateArticleFailure {
 
 interface MakePostFavourite {
   type: typeof MAKE_POST_FAVORITE_SUCCESS
+  payload: string
+}
+interface MakePostUnfavourite {
+  type: typeof MAKE_POST_UNFAVORITE_SUCCESS
+  payload: string
 }
 
 export type PostsAction =
@@ -123,3 +129,4 @@ export type PostsAction =
   | UpdateArticleSuccess
   | UpdateArticleFailure
   | MakePostFavourite
+  | MakePostUnfavourite

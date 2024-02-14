@@ -1,23 +1,23 @@
-/* eslint-disable import/order */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useEffect, useState } from 'react'
 import { Button, Flex, Input, Spin, notification } from 'antd'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
-
-import styles from './PostForm.module.scss'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import TextArea from 'antd/es/input/TextArea'
-import { useEffect, useState } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks.ts'
 import {
   clearCurrentArticle,
   fetchArticleData,
+  fetchData,
   postNewArticle,
   updateArticle,
 } from '../../../actions/fetchDataActions.ts'
-import { useLocation, useParams } from 'react-router-dom'
 import { RootState } from '../../../stores/store.ts'
+
+import styles from './PostForm.module.scss'
 
 interface FormValues {
   title: string
@@ -36,6 +36,7 @@ const PostForm = () => {
   const currentArticle = useAppSelector((state: RootState) => state.posts.currentArticle)
   const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated)
   const location = useLocation()
+  const navigate = useNavigate()
 
   const pathIncludesEdit = location.pathname.includes('/edit')
 
@@ -45,6 +46,7 @@ const PostForm = () => {
     control,
     setError,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues:
@@ -76,7 +78,8 @@ const PostForm = () => {
         dispatch(clearCurrentArticle())
       }
     }
-  }, [])
+    reset({ title: '', description: '', body: '', tags: [] })
+  }, [pathIncludesEdit])
 
   const [inputValue, setInputValue] = useState<string>('')
 
@@ -137,6 +140,9 @@ const PostForm = () => {
 
       if (data2) handlePostArticle()
     }
+
+    dispatch(fetchData(isAuthenticated))
+    navigate('/articles')
   }
 
   const tagsToRender = fields?.map((tag, index) => {
@@ -178,7 +184,7 @@ const PostForm = () => {
             )}
           />
         </label>
-        {errors.title && <span>{errors.title.message}</span>}
+        {errors.title && <span className={styles.postForm__warning}>{errors.title.message}</span>}
 
         <label htmlFor="description">
           Short description
@@ -199,7 +205,7 @@ const PostForm = () => {
             )}
           />
         </label>
-        {errors.description && <span>{errors.description.message}</span>}
+        {errors.description && <span className={styles.postForm__warning}>{errors.description.message}</span>}
 
         <label htmlFor="body">
           Text
@@ -220,7 +226,7 @@ const PostForm = () => {
             )}
           />
         </label>
-        {errors.body && <span>{errors.body.message}</span>}
+        {errors.body && <span className={styles.postForm__warning}>{errors.body.message}</span>}
 
         <label htmlFor="tags">
           Tags
@@ -248,7 +254,7 @@ const PostForm = () => {
               Add Tag
             </Button>
           </Flex>
-          {errors.tags && <span>{errors.tags.message}</span>}
+          {errors.tags && <span className={styles.postForm__warning}>{errors.tags.message}</span>}
         </label>
 
         <Button type="primary" size="large" htmlType="submit" className={styles.postForm__btn}>

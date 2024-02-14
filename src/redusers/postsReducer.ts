@@ -76,6 +76,44 @@ const postsReducer = (state: PostsState = initialState, action: PostsAction): Po
     case 'MAKE_POST_FAVORITE_SUCCESS':
       return {
         ...state,
+        pageData: state.pageData.map((article) => {
+          if (article.slug === action.payload) {
+            return {
+              ...article,
+              favorited: true,
+              favoritesCount: article.favoritesCount + 1,
+            }
+          }
+          return article
+        }),
+        currentArticle: state.currentArticle
+          ? {
+              ...state.currentArticle,
+              favorited: true,
+              favoritesCount: state.currentArticle.favoritesCount + 1,
+            }
+          : null,
+      }
+    case 'MAKE_POST_UNFAVORITE_SUCCESS':
+      return {
+        ...state,
+        pageData: state.pageData.map((article) => {
+          if (article.slug === action.payload) {
+            return {
+              ...article,
+              favorited: false,
+              favoritesCount: article.favoritesCount - 1,
+            }
+          }
+          return article
+        }),
+        currentArticle: state.currentArticle
+          ? {
+              ...state.currentArticle,
+              favorited: false,
+              favoritesCount: state.currentArticle.favoritesCount - 1,
+            }
+          : null,
       }
 
     default:

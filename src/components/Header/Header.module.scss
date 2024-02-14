@@ -1,3 +1,5 @@
+@import '../../assets/variables/variables.scss';
+
 .header {
   padding: 0px 22px;
   height: 80px;
@@ -26,7 +28,6 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-color: #1890ff;
     margin-left: 10px;
   }
 
@@ -40,7 +41,11 @@
 }
 
 .green-btn {
-  // background-color: green;
-  border-color: #52c41a;
-  color: #52c41a;
+  border-color: $button-green;
+  color: $button-green;
+}
+
+.green-btn:hover {
+  border-color: $button-green;
+  color: $button-green;
 }

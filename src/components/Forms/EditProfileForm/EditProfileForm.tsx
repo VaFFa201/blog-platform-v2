@@ -78,7 +78,7 @@ const EditProfileForm = () => {
             )}
           />
         </label>
-        {errors.username && <span>{errors.username.message}</span>}
+        {errors.username && <span className={styles.logForm__warning}>{errors.username.message}</span>}
         <label htmlFor="email">
           Email address
           <Controller
@@ -103,7 +103,7 @@ const EditProfileForm = () => {
             )}
           />
         </label>
-        {errors.email && <span>{errors.email.message}</span>}
+        {errors.email && <span className={styles.logForm__warning}>{errors.email.message}</span>}
         <label htmlFor="newPassword">
           New password
           <Controller
@@ -125,7 +125,7 @@ const EditProfileForm = () => {
             )}
           />
         </label>
-        {errors.newPassword && <span>{errors.newPassword.message}</span>}
+        {errors.newPassword && <span className={styles.logForm__warning}>{errors.newPassword.message}</span>}
 
         <label htmlFor="image">
           Avatar image (url)
@@ -145,7 +145,7 @@ const EditProfileForm = () => {
             )}
           />
         </label>
-        {errors.image && <span>{errors.image.message}</span>}
+        {errors.image && <span className={styles.logForm__warning}>{errors.image.message}</span>}
         <Button type="primary" size="large" htmlType="submit" className={styles.logForm__btn}>
           Save
         </Button>

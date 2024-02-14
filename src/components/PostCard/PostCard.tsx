@@ -1,10 +1,14 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/button-has-type */
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
-import { Button, Flex, Space, Typography } from 'antd'
+import { Flex, Typography } from 'antd'
 import { NavLink } from 'react-router-dom'
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 
 import { ARTICLES_ROUTE } from '../../utils/consts.ts'
 import { Post } from '../../types/posts.ts'
-import { makePostFavorite } from '../../actions/fetchDataActions.ts'
+import { makePostFavorite, makePostUnfavorite } from '../../actions/fetchDataActions.ts'
 import { useAppDispatch } from '../../hooks/hooks.ts'
 
 import styles from './PostCard.module.scss'
@@ -75,6 +79,15 @@ const PostCard: React.FC<Props> = ({ item }) => {
       </Text>
     )
   })
+
+  const handleFavorite = () => {
+    if (favorited) {
+      dispatch(makePostUnfavorite(slug))
+    } else {
+      dispatch(makePostFavorite(slug))
+    }
+  }
+
   const formatedDate = formatDate(createdAt)
   const shortedTitle = shortenText(title, 60)
 
@@ -82,17 +95,17 @@ const PostCard: React.FC<Props> = ({ item }) => {
     <Flex className={styles.post} vertical>
       <Flex className={styles.post__header} justify="space-between" align="center">
         <div className={styles.post__general}>
-          <Space>
+          <Flex align="center">
             <div className={styles.post__title}>
               <NavLink to={`${ARTICLES_ROUTE}/${slug}`}>{shortedTitle}</NavLink>
             </div>
             <div className={styles.post__likes}>
-              <Button danger={favorited} onClick={() => dispatch(makePostFavorite(slug))}>
-                like
-              </Button>
-              {`${favoritesCount} likes`}
+              <button type="button" className={styles['heart-button']} onClick={handleFavorite}>
+                {favorited ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined style={{ color: 'black' }} />}
+              </button>
+              {` ${favoritesCount}`}
             </div>
-          </Space>
+          </Flex>
           <div className={styles.post__tags}>{tags}</div>
         </div>
         <Flex className={styles.post__author}>

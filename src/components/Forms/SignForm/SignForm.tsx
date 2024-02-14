@@ -1,14 +1,12 @@
-/* eslint-disable indent */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { Button, Flex, Input } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 
 import { REGISTRATION_ROUTE } from '../../../utils/consts.ts'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks.ts'
+import { useAppDispatch } from '../../../hooks/hooks.ts'
 import { login } from '../../../actions/authActions.ts'
 
 import styles from './SignForm.module.scss'
@@ -66,7 +64,7 @@ const SignForm = () => {
             </label>
           )}
         />
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <span className={styles.signForm__warning}>{errors.email.message}</span>}
         <Controller
           name="password"
           control={control}
@@ -90,7 +88,7 @@ const SignForm = () => {
             </label>
           )}
         />
-        {errors.password && <span>{errors.password.message}</span>}
+        {errors.password && <span className={styles.signForm__warning}>{errors.password.message}</span>}
         <Button className={styles.signForm__btn} type="primary" size="large" htmlType="submit">
           Sign In
         </Button>

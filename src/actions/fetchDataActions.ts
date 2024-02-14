@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { API_URL_BASE } from '../utils/consts.ts'
 import { $authHost, $host } from '../http/index.ts'
-import { Article, Error, Articles, ArticleToSend, Post } from '../types/posts.ts'
+import { Article, Error, Articles, ArticleToSend } from '../types/posts.ts'
 import { AppDispatch } from '../stores/store.ts'
 
 export const fetchDataRequest = () => {
@@ -56,6 +56,7 @@ export const postArticleFailure = (error: Error) => {
     payload: error,
   }
 }
+
 export const updateArticleSuccess = () => {
   return {
     type: 'UPDATE_ARTICLE_SUCCESS',
@@ -69,16 +70,43 @@ export const updateArticleFailure = (error: Error) => {
   }
 }
 
-export const makePostFavoriteSuccess = (obj: any) => {
+export const deleteArticleSuccess = () => {
+  return {
+    type: 'DELETE_ARTICLE_SUCCESS',
+  }
+}
+
+export const deleteArticleFailure = (error: Error) => {
+  return {
+    type: 'DELETE_ARTICLE_FAILURE',
+    payload: error,
+  }
+}
+
+export const makePostFavoriteSuccess = (slug: string) => {
   return {
     type: 'MAKE_POST_FAVORITE_SUCCESS',
-    payload: obj,
+    payload: slug,
   }
 }
 
 export const makePostFavoriteFailure = (error: Error) => {
   return {
     type: 'MAKE_POST_FAVORITE',
+    payload: error,
+  }
+}
+
+export const makePostUnavoriteSuccess = (slug: string) => {
+  return {
+    type: 'MAKE_POST_UNFAVORITE_SUCCESS',
+    payload: slug,
+  }
+}
+
+export const makePostUnavoriteFailure = (error: Error) => {
+  return {
+    type: 'MAKE_POST_UNFAVORITE',
     payload: error,
   }
 }
@@ -158,7 +186,6 @@ export const postNewArticle = (article: ArticleToSend) => {
       const body = response.data
 
       dispatch(postArticleSuccess())
-      console.log(body)
 
       return body
     } catch (error: any) {
@@ -175,7 +202,6 @@ export const updateArticle = (article: ArticleToSend, slug: string) => {
       const body = response.data
 
       dispatch(updateArticleSuccess())
-      console.log(body)
 
       return body
     } catch (error: any) {
@@ -191,9 +217,7 @@ export const makePostFavorite = (slug: string) => {
       const response = await $authHost.post(`${API_URL_BASE}/articles/${slug}/favorite`)
       const body = response.data
 
-      makePostFavoriteSuccess(body)
-
-      console.log(body)
+      dispatch(makePostFavoriteSuccess(slug))
 
       return body
     } catch (error: any) {
@@ -209,11 +233,27 @@ export const makePostUnfavorite = (slug: string) => {
       const response = await $authHost.delete(`${API_URL_BASE}/articles/${slug}/favorite`)
       const body = response.data
 
-      console.log(body)
+      dispatch(makePostUnavoriteSuccess(slug))
 
       return body
     } catch (error: any) {
-      dispatch(makePostFavoriteFailure(error))
+      dispatch(makePostUnavoriteFailure(error))
+    }
+  }
+}
+
+export const deleteArticle = (slug: string) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(fetchDataRequest())
+    try {
+      const response = await $authHost.delete(`${API_URL_BASE}/articles/${slug}`)
+      const body = response.data
+
+      deleteArticleSuccess()
+
+      return body
+    } catch (error: any) {
+      dispatch(deleteArticleFailure(error))
     }
   }
 }

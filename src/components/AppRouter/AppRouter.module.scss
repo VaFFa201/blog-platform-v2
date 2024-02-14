@@ -1,5 +1,7 @@
+@import '../../assets/variables/variables.scss';
+
 .main {
-  background-color: #ebeef3;
+  background-color: $background-color;
   padding-top: 15px;
   min-height: calc(100vh - 80px);
 }

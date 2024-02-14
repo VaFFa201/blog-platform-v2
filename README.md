@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Link to vercel
+
+Link : https://blog-platform-v2-q8zwyxb73-vaffa201.vercel.app/
+
 ## Available Scripts
 
 In the project directory, you can run:

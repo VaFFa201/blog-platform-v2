@@ -1,12 +1,21 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
-import { Button, Flex, Spin, Typography } from 'antd'
-import { NavLink, useParams } from 'react-router-dom'
+import { Button, Flex, Popconfirm, Spin, Typography, message } from 'antd'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import Markdown from 'react-markdown'
+import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
-import { clearCurrentArticle, fetchArticleData } from '../../actions/fetchDataActions.ts'
-import { ARTICLES_ROUTE, EDIT_ARTICLE_ROUTE } from '../../utils/consts.ts'
+import {
+  clearCurrentArticle,
+  deleteArticle,
+  fetchArticleData,
+  fetchData,
+  makePostFavorite,
+  makePostUnfavorite,
+} from '../../actions/fetchDataActions.ts'
+import { ARTICLES_ROUTE } from '../../utils/consts.ts'
 import { RootState } from '../../stores/store.ts'
 
 import styles from './PostView.module.scss'
@@ -19,10 +28,13 @@ type PostViewParams = {
 
 const PostView = () => {
   const { sign } = useParams<PostViewParams>()
+
   const currentArticle = useAppSelector((state: RootState) => state.posts.currentArticle)
   const currentUser = useAppSelector((state: RootState) => state.auth.user)
   const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated)
+
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(fetchArticleData(sign, isAuthenticated))
@@ -62,7 +74,7 @@ const PostView = () => {
       </Flex>
     )
 
-  const { slug, description, title, createdAt, author, favoritesCount, tagList, body } = currentArticle
+  const { slug, description, title, createdAt, author, favorited, favoritesCount, tagList, body } = currentArticle
   const { username, image } = author
   const tags = tagList.map((tag: string, index: number) => {
     const tadKey = `${slug}-${tag}${index}`
@@ -74,13 +86,37 @@ const PostView = () => {
   })
   const showAdditionalButtons = currentUser?.username === username
 
+  const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
+    if (e) {
+      dispatch(deleteArticle(slug))
+      dispatch(clearCurrentArticle())
+      // здесь должно быть обновление списка постов с текущей страницы
+      navigate('/articles')
+      dispatch(fetchData(isAuthenticated))
+      message.success('Article is successfully deleted')
+    }
+  }
+
+  const handleFavorite = () => {
+    if (favorited) {
+      dispatch(makePostUnfavorite(slug))
+    } else {
+      dispatch(makePostFavorite(slug))
+    }
+  }
+
   return (
     <Flex className={`${styles.post} ${styles['post-view']}`} vertical>
       <Flex className={styles.post__header} justify="space-between" align="center">
         <div className={styles.post__general}>
           <Flex>
             <div className={styles.post__title}>{title}</div>
-            <div className={styles.post__likes}>{`${favoritesCount} likes`}</div>
+            <div className={styles.post__likes}>
+              <button type="button" className={styles['heart-button']} onClick={handleFavorite}>
+                {favorited ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined style={{ color: 'black' }} />}
+              </button>
+              {` ${favoritesCount}`}
+            </div>
           </Flex>
           <div className={styles.post__tags}>{tags}</div>
         </div>
@@ -99,7 +135,15 @@ const PostView = () => {
             <Button className={styles['green-btn']}>
               <NavLink to={`${ARTICLES_ROUTE}/${slug}/edit`}>Edit</NavLink>
             </Button>
-            <Button danger>Delete</Button>
+            <Popconfirm
+              title="Delete the article"
+              description="Are you sure to delete this article?"
+              onConfirm={confirm}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button danger>Delete</Button>
+            </Popconfirm>
           </>
         )}
       </Flex>

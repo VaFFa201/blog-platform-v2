@@ -1,9 +1,8 @@
-/* eslint-disable import/extensions */
 import React from 'react'
 
-import PostList from './components/PostList/index.js'
+import PostList from './components/PostList'
 import LoginPage from './pages/LoginPage.tsx'
-import PostView from './components/PostView/index.js'
+import PostView from './components/PostView'
 import {
   HERO_ROUTE,
   ARTICLES_ROUTE,
@@ -12,8 +11,8 @@ import {
   PROFILE_ROUTE,
   NEW_ARTICLE_ROUTE,
 } from './utils/consts.ts'
-import PostForm from './components/Forms/PostForm/PostForm.tsx'
-import EditProfileForm from './components/Forms/EditProfileForm/EditProfileForm.tsx'
+import PostForm from './components/Forms/PostForm'
+import EditProfileForm from './components/Forms/EditProfileForm'
 
 interface Route {
   path: string

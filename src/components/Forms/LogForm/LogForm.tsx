@@ -1,17 +1,14 @@
-/* eslint-disable import/order */
-/* eslint-disable indent */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button, Checkbox, Flex, Input } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 
 import { LOGIN_ROUTE } from '../../../utils/consts.ts'
-
-import styles from './LogForm.module.scss'
 import { useAppDispatch } from '../../../hooks/hooks.ts'
 import { register } from '../../../actions/authActions.ts'
+
+import styles from './LogForm.module.scss'
 
 interface FormValues {
   username: string
@@ -69,7 +66,7 @@ const LogForm = () => {
             )}
           />
         </label>
-        {errors.username && <span>{errors.username.message}</span>}
+        {errors.username && <span className={styles.logForm__warning}>{errors.username.message}</span>}
         <label htmlFor="email">
           Email address
           <Controller
@@ -93,7 +90,7 @@ const LogForm = () => {
             )}
           />
         </label>
-        {errors.email && <span>{errors.email.message}</span>}
+        {errors.email && <span className={styles.logForm__warning}>{errors.email.message}</span>}
         <label htmlFor="password">
           Password
           <Controller
@@ -115,7 +112,7 @@ const LogForm = () => {
             )}
           />
         </label>
-        {errors.password && <span>{errors.password.message}</span>}
+        {errors.password && <span className={styles.logForm__warning}>{errors.password.message}</span>}
         <label htmlFor="password-rep">
           Repeat Password
           <Controller
@@ -136,7 +133,7 @@ const LogForm = () => {
             )}
           />
         </label>
-        {errors.repeatPassword && <span>{errors.repeatPassword.message}</span>}
+        {errors.repeatPassword && <span className={styles.logForm__warning}>{errors.repeatPassword.message}</span>}
         <Controller
           name="agree"
           defaultValue={false}
@@ -144,10 +141,13 @@ const LogForm = () => {
           rules={{
             required: 'It is necessary to accept the term',
           }}
-          render={({ field }) => <Checkbox {...field} className={styles.logForm__checkbox} checked={field.value} />}
+          render={({ field }) => (
+            <Checkbox id="agree" {...field} className={styles.logForm__checkbox} checked={field.value}>
+              I agree to the processing of my personal information
+            </Checkbox>
+          )}
         />
-        I agree to the processing of my personal information
-        {errors.agree && <p>{errors.agree.message}</p>}
+        {errors.agree && <span className={styles.logForm__warning}>{errors.agree.message}</span>}
         <Button type="primary" size="large" htmlType="submit" className={styles.logForm__btn}>
           Create
         </Button>

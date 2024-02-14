@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Pagination } from 'antd'
 
-import PostCard from '../PostCard/PostCard.tsx'
+import PostCard from '../PostCard'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { fetchDataOnPage } from '../../actions/fetchDataActions.ts'
 import { Post } from '../../types/posts.ts'

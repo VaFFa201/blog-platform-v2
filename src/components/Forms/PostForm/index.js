@@ -1,3 +1,3 @@
-import LogForm from './PostForm.tsx'
+import PostForm from './PostForm.tsx'
 
-export default LogForm
+export default PostForm
