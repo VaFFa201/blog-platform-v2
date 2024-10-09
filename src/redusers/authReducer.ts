@@ -9,6 +9,7 @@ const initialState: AuthState = {
   user: null,
   error: null,
 }
+
 const authReducer = (state: AuthState = initialState, action: AuthAction): AuthState => {
   switch (action.type) {
     case 'AUTH_REQUEST':

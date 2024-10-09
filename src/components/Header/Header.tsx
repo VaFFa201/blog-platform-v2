@@ -32,7 +32,9 @@ const Header: React.FC = () => {
             <NavLink to={PROFILE_ROUTE}>{user.username}</NavLink>
           </div>
           <NavLink to={PROFILE_ROUTE}>
-            <img src={user.image} className={styles.profile__pic} alt="profile icon" />
+            <div className={styles['profile__pic-box']}>
+              <img src={user.image} className={styles.profile__pic} alt="profile icon" />
+            </div>
           </NavLink>
           <Button onClick={handleLogOut} className={styles.profile__logout}>
             Log Out

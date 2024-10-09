@@ -24,11 +24,18 @@
     line-height: 28px;
     text-align: right;
   }
-  &__pic {
+  &__pic-box {
     width: 45px;
     height: 45px;
     border-radius: 50%;
     margin-left: 10px;
+    overflow: hidden;
+  }
+
+  &__pic {
+    max-width: auto;
+    height: 100%;
+    object-fit: cover;
   }
 
   &__new-post {

@@ -75,7 +75,7 @@ const PostCard: React.FC<Props> = ({ item }) => {
     const tadKey = `${slug}-${tag}${index}`
     return (
       <Text key={tadKey} keyboard>
-        {tag}
+        {shortenText(tag, 25)}
       </Text>
     )
   })
@@ -116,7 +116,7 @@ const PostCard: React.FC<Props> = ({ item }) => {
           <img src={image} className={styles.author__pic} alt="profile icon" />
         </Flex>
       </Flex>
-      <div className={styles.post__description}>{description}</div>
+      <div className={styles.post__description}>{shortenText(description, 200)}</div>
     </Flex>
   )
 }
