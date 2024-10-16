@@ -14,8 +14,8 @@ import {
   fetchData,
   postNewArticle,
   updateArticle,
-} from '../../../actions/fetchDataActions.ts'
-import { RootState } from '../../../stores/store.ts'
+} from '../../../app/Redux/actions/fetchDataActions.ts'
+import { RootState } from '../../../app/Redux/stores/store.ts'
 
 import styles from './PostForm.module.scss'
 

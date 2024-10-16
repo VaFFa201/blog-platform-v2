@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { LOGIN_ROUTE } from '../../../shared/utils/consts.ts'
 import { useAppDispatch } from '../../../shared/hooks/hooks.ts'
-import { register } from '../../../actions/authActions.ts'
+import { register } from '../../../app/Redux/actions/authActions.ts'
 
 import styles from './LogForm.module.scss'
 

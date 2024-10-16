@@ -10,8 +10,8 @@ import {
   REGISTRATION_ROUTE,
 } from '../../shared/utils/consts.ts'
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks.ts'
-import { RootState } from '../../stores/store.ts'
-import { logoutFunc } from '../../actions/authActions.ts'
+import { RootState } from '../../app/Redux/stores/store.ts'
+import { logoutFunc } from '../../app/Redux/actions/authActions.ts'
 
 import styles from './Header.module.scss'
 

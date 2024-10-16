@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
 
-import store from './stores/store.ts'
+import store from './app/Redux/stores/store.ts'
 import App from './App.tsx'
 
 import 'antd/dist/reset.css'

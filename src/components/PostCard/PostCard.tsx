@@ -8,7 +8,7 @@ import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 
 import { ARTICLES_ROUTE } from '../../shared/utils/consts.ts'
 import { Post } from '../../types/posts.ts'
-import { makePostFavorite, makePostUnfavorite } from '../../actions/fetchDataActions.ts'
+import { makePostFavorite, makePostUnfavorite } from '../../app/Redux/actions/fetchDataActions.ts'
 import { useAppDispatch } from '../../shared/hooks/hooks.ts'
 
 import styles from './PostCard.module.scss'

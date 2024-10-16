@@ -14,9 +14,9 @@ import {
   fetchData,
   makePostFavorite,
   makePostUnfavorite,
-} from '../../actions/fetchDataActions.ts'
+} from '../../app/Redux/actions/fetchDataActions.ts'
 import { ARTICLES_ROUTE } from '../../shared/utils/consts.ts'
-import { RootState } from '../../stores/store.ts'
+import { RootState } from '../../app/Redux/stores/store.ts'
 
 import styles from './PostView.module.scss'
 

@@ -8,8 +8,8 @@ import { Controller, useForm } from 'react-hook-form'
 
 import styles from './LogForm.module.scss'
 import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks.ts'
-import { RootState } from '../../../stores/store.ts'
-import { updateUser } from '../../../actions/authActions.ts'
+import { RootState } from '../../../app/Redux/stores/store.ts'
+import { updateUser } from '../../../app/Redux/actions/authActions.ts'
 
 interface FormValues {
   username: string

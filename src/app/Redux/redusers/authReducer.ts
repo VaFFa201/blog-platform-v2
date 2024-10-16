@@ -1,7 +1,7 @@
 /* eslint-disable default-param-last */
 /* eslint-disable indent */
 
-import { AuthAction, AuthState } from '../types/auth.ts'
+import { AuthAction, AuthState } from '../../../types/auth.ts'
 
 const initialState: AuthState = {
   isLoading: false,

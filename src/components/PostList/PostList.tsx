@@ -3,7 +3,7 @@ import { Flex, Pagination } from 'antd'
 
 import PostCard from '../PostCard'
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks.ts'
-import { fetchDataOnPage } from '../../actions/fetchDataActions.ts'
+import { fetchDataOnPage } from '../../app/Redux/actions/fetchDataActions.ts'
 import { Post } from '../../types/posts.ts'
 
 import styles from './PostList.module.scss'

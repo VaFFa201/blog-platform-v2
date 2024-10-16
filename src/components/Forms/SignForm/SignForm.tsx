@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form'
 
 import { REGISTRATION_ROUTE } from '../../../shared/utils/consts.ts'
 import { useAppDispatch } from '../../../shared/hooks/hooks.ts'
-import { login } from '../../../actions/authActions.ts'
+import { login } from '../../../app/Redux/actions/authActions.ts'
 
 import styles from './SignForm.module.scss'
 

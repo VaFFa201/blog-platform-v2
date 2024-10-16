@@ -1,7 +1,7 @@
 /* eslint-disable default-param-last */
 /* eslint-disable indent */
 
-import { PostsAction, PostsState } from '../types/posts.ts'
+import { PostsAction, PostsState } from '../../../types/posts.ts'
 
 const initialState: PostsState = {
   pageData: [],

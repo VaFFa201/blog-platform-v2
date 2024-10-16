@@ -1,6 +1,6 @@
-import { $authHost, $host } from '../http/index.ts'
+import { $authHost, $host } from '../../../http/index.ts'
 import { AppDispatch } from '../stores/store.ts'
-import { User, UserToLog, UserToUpdate } from '../types/auth.ts'
+import { User, UserToLog, UserToUpdate } from '../../../types/auth.ts'
 
 export const authRequest = () => {
   return {
