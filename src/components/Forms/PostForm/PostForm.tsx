@@ -7,7 +7,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import TextArea from 'antd/es/input/TextArea'
 
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks.ts'
 import {
   clearCurrentArticle,
   fetchArticleData,

@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { HERO_ROUTE } from '../../utils/consts.ts'
 import { authRoutes, publicRoutes } from '../../routes.ts'
 import { RootState } from '../../stores/store.ts'
-import { useAppSelector } from '../../hooks/hooks.ts'
+import { useAppSelector } from '../../shared/hooks/hooks.ts'
 
 import styles from './AppRouter.module.scss'
 

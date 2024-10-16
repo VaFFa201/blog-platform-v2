@@ -6,7 +6,7 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import Markdown from 'react-markdown'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks.ts'
 import {
   clearCurrentArticle,
   deleteArticle,

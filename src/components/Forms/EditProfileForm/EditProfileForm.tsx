@@ -7,7 +7,7 @@ import { Button, Flex, Input, notification } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
 
 import styles from './LogForm.module.scss'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/hooks.ts'
 import { RootState } from '../../../stores/store.ts'
 import { updateUser } from '../../../actions/authActions.ts'
 

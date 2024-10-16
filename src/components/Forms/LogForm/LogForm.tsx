@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 
 import { LOGIN_ROUTE } from '../../../utils/consts.ts'
-import { useAppDispatch } from '../../../hooks/hooks.ts'
+import { useAppDispatch } from '../../../shared/hooks/hooks.ts'
 import { register } from '../../../actions/authActions.ts'
 
 import styles from './LogForm.module.scss'
