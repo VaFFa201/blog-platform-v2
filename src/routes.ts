@@ -10,7 +10,7 @@ import {
   REGISTRATION_ROUTE,
   PROFILE_ROUTE,
   NEW_ARTICLE_ROUTE,
-} from './utils/consts.ts'
+} from './shared/utils/consts.ts'
 import PostForm from './components/Forms/PostForm'
 import EditProfileForm from './components/Forms/EditProfileForm'
 

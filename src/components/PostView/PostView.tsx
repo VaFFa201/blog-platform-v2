@@ -15,7 +15,7 @@ import {
   makePostFavorite,
   makePostUnfavorite,
 } from '../../actions/fetchDataActions.ts'
-import { ARTICLES_ROUTE } from '../../utils/consts.ts'
+import { ARTICLES_ROUTE } from '../../shared/utils/consts.ts'
 import { RootState } from '../../stores/store.ts'
 
 import styles from './PostView.module.scss'

@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { HERO_ROUTE } from '../../utils/consts.ts'
+import { HERO_ROUTE } from '../../shared/utils/consts.ts'
 import { authRoutes, publicRoutes } from '../../routes.ts'
 import { RootState } from '../../stores/store.ts'
 import { useAppSelector } from '../../shared/hooks/hooks.ts'

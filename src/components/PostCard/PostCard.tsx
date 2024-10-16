@@ -6,7 +6,7 @@ import { Flex, Typography } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 
-import { ARTICLES_ROUTE } from '../../utils/consts.ts'
+import { ARTICLES_ROUTE } from '../../shared/utils/consts.ts'
 import { Post } from '../../types/posts.ts'
 import { makePostFavorite, makePostUnfavorite } from '../../actions/fetchDataActions.ts'
 import { useAppDispatch } from '../../shared/hooks/hooks.ts'

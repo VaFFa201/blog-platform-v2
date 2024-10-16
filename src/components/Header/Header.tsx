@@ -2,7 +2,13 @@ import { Button, Flex, Space } from 'antd'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { HERO_ROUTE, LOGIN_ROUTE, NEW_ARTICLE_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '../../utils/consts.ts'
+import {
+  HERO_ROUTE,
+  LOGIN_ROUTE,
+  NEW_ARTICLE_ROUTE,
+  PROFILE_ROUTE,
+  REGISTRATION_ROUTE,
+} from '../../shared/utils/consts.ts'
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/hooks.ts'
 import { RootState } from '../../stores/store.ts'
 import { logoutFunc } from '../../actions/authActions.ts'

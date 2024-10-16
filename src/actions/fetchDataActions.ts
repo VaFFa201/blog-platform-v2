@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { API_URL_BASE } from '../utils/consts.ts'
+import { API_URL_BASE } from '../shared/utils/consts.ts'
 import { $authHost, $host } from '../http/index.ts'
 import { Article, Error, Articles, ArticleToSend } from '../types/posts.ts'
 import { AppDispatch } from '../stores/store.ts'

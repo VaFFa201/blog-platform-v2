@@ -5,7 +5,7 @@ import { Button, Flex, Input } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 
-import { REGISTRATION_ROUTE } from '../../../utils/consts.ts'
+import { REGISTRATION_ROUTE } from '../../../shared/utils/consts.ts'
 import { useAppDispatch } from '../../../shared/hooks/hooks.ts'
 import { login } from '../../../actions/authActions.ts'
 
