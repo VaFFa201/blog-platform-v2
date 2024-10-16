@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
 
-import { API_URL_BASE } from '../shared/utils/consts.ts'
+import { API_URL_BASE } from '../../shared/utils/consts.ts'
 
 interface AdaptAxiosRequestConfig extends AxiosRequestConfig {
   headers: AxiosRequestHeaders

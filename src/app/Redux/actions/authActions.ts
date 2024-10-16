@@ -1,4 +1,4 @@
-import { $authHost, $host } from '../../../http/index.ts'
+import { $authHost, $host } from '../../HTTP/index.ts'
 import { AppDispatch } from '../stores/store.ts'
 import { User, UserToLog, UserToUpdate } from '../../../types/auth.ts'
 
