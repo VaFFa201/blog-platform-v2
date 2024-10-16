@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 import Header from './components/Header'
-import AppRouter from './components/AppRouter'
+import AppRouter from './app/router/AppRouter'
 import { fetchData } from './actions/fetchDataActions.ts'
 import { useAppDispatch, useAppSelector } from './shared/hooks/hooks.ts'
 import { checkUserToken } from './actions/authActions.ts'
